@@ -7,9 +7,9 @@ import processing.core.PApplet;
 
 public class ScoreDisplay extends PApplet
 {
-	String score = "DEFGABcd";
+	// String score = "DEFGABcd";
 	// String score = "D2E2F2G2A2B2c2d2";
-	// String score = "DEF2F2F2EFA2A2B2AFD2E2D2D2D2";
+	String score = "DEF2F2F2EFA2A2B2AFD2E2D2D2D2";
 
 	private float sideBorder;
 	private float topBorder;
@@ -86,7 +86,7 @@ public class ScoreDisplay extends PApplet
 
 			Note note = notes.get(i);
 
-			if(note.getDuration() == 2) {
+			if(note.getDuration() == 1) {
 				line(x + radius, height - y - (radius * 6), x + (radius * 2), height - y - (radius * 5));
 			}
 			
@@ -113,10 +113,13 @@ public class ScoreDisplay extends PApplet
 
 			circle(x, height - y, radius * 2);
 			line(x + radius, height - y, x + radius, height - y - (radius * 6));
-			line(x + radius, height - y - (radius * 6), x + (radius * 2), height - y - (radius * 5));
 
-			
 			Note note = notes.get(i);
+
+			if(note.getDuration() == 1) {
+				line(x + radius, height - y - (radius * 6), x + (radius * 2), height - y - (radius * 5));
+			}
+
 			textSize(20);
 			text(note.getNote(), x, topBorder);
 		}
