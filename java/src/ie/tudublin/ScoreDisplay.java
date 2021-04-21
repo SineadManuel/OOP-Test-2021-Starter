@@ -66,6 +66,33 @@ public class ScoreDisplay extends PApplet
 		}
 	}
 
+	void highlight() {
+		int radius = 10;
+
+
+		for(int i = 0; i < notes.size(); i++) {
+			// fix hardcode
+			
+			float x = map(i, 0, notes.size(), sideBorder + 10, width - sideBorder - 10);
+			float y = map(i, 0, notes.size() + 2, 200 - 12, 300 + 10);
+
+			if (mouseX > x - (radius * 2) && mouseX < x - (radius * 2) + (radius * 5))
+			{
+				fill(255, 0, 0); 
+				stroke(255, 0, 0);               
+			}
+
+			circle(x, height - y, radius * 2);
+			line(x + radius, height - y, x + radius, height - y - (radius * 6));
+			line(x + radius, height - y - (radius * 6), x + (radius * 2), height - y - (radius * 5));
+
+			
+			Note note = notes.get(i);
+			textSize(20);
+			text(note.getNote(), x, topBorder);
+		}
+	}
+
 	public void settings()
 	{
 		size(1000, 500);
@@ -89,5 +116,6 @@ public class ScoreDisplay extends PApplet
 		background(255);
 		drawStave();
 		drawNotes();
+		highlight();
 	}
 }
