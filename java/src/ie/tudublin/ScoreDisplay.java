@@ -13,12 +13,12 @@ public class ScoreDisplay extends PApplet
 
 	private float sideBorder;
 	private float topBorder;
+	int duration;
+	char scoreChar;
+	int radius;
 
 	// ArrayList for instances of Note
 	ArrayList<Note> notes = new ArrayList<Note>();
-
-	int duration;
-	char scoreChar;
 
 	// Populate ArrayList with chars in String score
 	public void loadScore() {
@@ -55,8 +55,18 @@ public class ScoreDisplay extends PApplet
 
 	// Print ArrayList
 	public void printScores() {
-		for(Note n: notes) {
-			println(n);
+		for(int i = 0; i < notes.size(); i++) {
+			Note note = notes.get(i);
+			String noteType;
+			
+			if(note.getDuration() == 1) {
+				noteType = "Quaver";
+			}
+			else {
+				noteType = "Crotchet";
+			}
+
+			println(note.getNote() + "\t" + note.getDuration()+ "\t" + noteType);
 		}
 	}
 
@@ -75,9 +85,8 @@ public class ScoreDisplay extends PApplet
 	{
 		int radius = 10;
 		for(int i = 0; i < notes.size(); i++) {
-			// fix hardcode
-			float x = map(i, 0, notes.size(), sideBorder + 10, width - sideBorder - 10);
-			float y = map(i, 0, notes.size() + 2, 200 - 12, 300 + 10);
+			float x = map(i, 0, notes.size(), sideBorder + radius, width - sideBorder - radius);
+			float y = map(i, 0, notes.size() + 2, topBorder - radius - 2, height - topBorder + radius);
 			stroke(0);
 			
 			fill(0);
@@ -91,19 +100,14 @@ public class ScoreDisplay extends PApplet
 			}
 			
 			textSize(20);
-			text(note.getNote(), x, topBorder);
+			text(note.getNote(), x, topBorder - (topBorder/2));
 		}
 	}
 
 	void highlight() {
-		int radius = 10;
-
-
 		for(int i = 0; i < notes.size(); i++) {
-			// fix hardcode
-			
-			float x = map(i, 0, notes.size(), sideBorder + 10, width - sideBorder - 10);
-			float y = map(i, 0, notes.size() + 2, 200 - 12, 300 + 10);
+			float x = map(i, 0, notes.size(), sideBorder + radius, width - sideBorder - radius);
+			float y = map(i, 0, notes.size() + 2, topBorder - radius - 2, height - topBorder + radius);
 
 			if (mouseX > x - (radius * 2) && mouseX < x - (radius * 2) + (radius * 5))
 			{
@@ -121,7 +125,7 @@ public class ScoreDisplay extends PApplet
 			}
 
 			textSize(20);
-			text(note.getNote(), x, topBorder);
+			text(note.getNote(), x, topBorder - (topBorder/2));
 		}
 	}
 
@@ -140,7 +144,8 @@ public class ScoreDisplay extends PApplet
 		loadScore();
 		printScores();
 		sideBorder = width * 0.1f;
-		topBorder = height * 0.18f;
+		topBorder = height * 0.4f;
+		radius = 10;
 	}
 
 	public void draw()
