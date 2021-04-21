@@ -7,9 +7,9 @@ import processing.core.PApplet;
 
 public class ScoreDisplay extends PApplet
 {
-	// String score = "DEFGABcd";
+	String score = "DEFGABcd";
 	// String score = "D2E2F2G2A2B2c2d2";
-	String score = "DEF2F2F2EFA2A2B2AFD2E2D2D2D2";
+	// String score = "DEF2F2F2EFA2A2B2AFD2E2D2D2D2";
 
 	private float sideBorder;
 	private float topBorder;
@@ -22,23 +22,34 @@ public class ScoreDisplay extends PApplet
 
 	// Populate ArrayList with chars in String score
 	public void loadScore() {
-		for(int i = 0; i < score.length() - 1; i += 2) {
-			if(Character.isDigit(score.charAt(i)) == false) {
-				scoreChar = score.charAt(i);
-			}
-			else {
-				scoreChar = score.charAt(i+1);
-			}
+		if(score.length() > 9) {
+			for(int i = 0; i < score.length() - 1; i += 2) {
+				if(Character.isDigit(score.charAt(i)) == false) {
+					scoreChar = score.charAt(i);
+				}
+				else {
+					scoreChar = score.charAt(i+1);
+				}
 
-			if(Character.isDigit(score.charAt(i+1)) == true) {
-				duration = 2;
-			}
-			else {
-				duration = 1;
-			}
+				if(Character.isDigit(score.charAt(i+1)) == true) {
+					duration = 2;
+				}
+				else {
+					duration = 1;
+				}
 
-			Note note = new Note(scoreChar, duration);
-			notes.add(note);
+				Note note = new Note(scoreChar, duration);
+				notes.add(note);
+			}
+		}
+		else {
+			for(int i = 0; i < score.length(); i++) {
+				char scoreChar = score.charAt(i);
+				int duration = 1;
+	
+				Note note = new Note(scoreChar, duration);
+				notes.add(note);
+			}
 		}
 	}
 
@@ -72,9 +83,13 @@ public class ScoreDisplay extends PApplet
 			fill(0);
 			circle(x, height - y, radius * 2);
 			line(x + radius, height - y, x + radius, height - y - (radius * 6));
-			line(x + radius, height - y - (radius * 6), x + (radius * 2), height - y - (radius * 5));
 
 			Note note = notes.get(i);
+
+			if(note.getDuration() == 2) {
+				line(x + radius, height - y - (radius * 6), x + (radius * 2), height - y - (radius * 5));
+			}
+			
 			textSize(20);
 			text(note.getNote(), x, topBorder);
 		}
