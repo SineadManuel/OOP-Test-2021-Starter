@@ -13,6 +13,24 @@ public class ScoreDisplay extends PApplet
 
 	// ArrayList for instances of Note
 	ArrayList<Note> notes = new ArrayList<Note>();
+
+	// Populate ArrayList with chars in String score
+	public void loadScore() {
+		for(int i = 0; i < score.length(); i++) {
+			char scoreChar = score.charAt(i);
+			int duration = 1;
+
+			Note note = new Note(scoreChar, duration);
+			notes.add(note);
+		}
+	}
+
+	// Print ArrayList
+	public void printScores() {
+		for(Note n: notes) {
+			println(n);
+		}
+	}
 	
 	public void settings()
 	{
@@ -26,7 +44,8 @@ public class ScoreDisplay extends PApplet
 
 	public void setup() 
 	{
-		
+		loadScore();
+		printScores();
 	}
 
 	public void draw()
